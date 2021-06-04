@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from 'react'
 import "./App.css";
 import Main from "./components/main/Main";
@@ -21,6 +21,8 @@ const App = () => {
   const closeSidebar = () => {
     setsidebarOpen(false);
   };
+
+
   return (
       <div className="container">
         <Navbar sidebarOpen={sidebarOpen} openSidebar={openSidebar} />

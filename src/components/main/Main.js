@@ -1,11 +1,35 @@
 import TabStickyHeadTable from "../Table";
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import "../main/Main.css";
 import BasicTextFields from '../TickerForm';
 import MouseOverPopover  from "../Popover";
 import PieChart from "../PieChart";
+import axios from "axios"
+
+const api = axios.create({
+  baseURL: 'http://localhost:5000',
+  timeout: 30000,
+});
+
 
 const Main = () => {
+
+  const [flaskApp] = useState(0);
+
+  useEffect(async () => {
+try {
+  const data = await api.get('/test', {});
+  console.log('----data: ', data);
+} catch (error) {
+  console.log('error: ', error);
+
+}
+
+    // fetch('/').then(res => res.json()).then(data => {
+
+    // });
+  }, []);
+
   return (
     <main>
       <div className="main__container">
