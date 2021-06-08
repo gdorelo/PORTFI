@@ -39,9 +39,9 @@ PORTFI uses a number of open source projects to work properly:
 
 PORTFI requires several technologies to be installed in order to run, this is why we recommend you to use it on our deployed live version here.
 
-If you still would like to run it for yourself, you can run a script with the commands below:
+If you still would like to run it for yourself, follow the steps below:
 
-- Install the necessary software:
+- Install the necessary software (paste everything into a script and run it):
 
 ```
 #!/bin/bash
@@ -69,6 +69,7 @@ sudo apt-get install -y nodejs
 ```
 
 After all of the above dependancies are installed:
+
 - Clone this repository ```git clone https://github.com/gdorelo/PORTFI.git ```
 - ``` cd``` into the PORTFI folder
 - Run ```npm install``` to install React dependancies
@@ -77,6 +78,8 @@ After all of the above dependancies are installed:
 - Run the front-end ```npm start```
 
 NPM should automatically open a new browser page on localhost:3000/ where PORTFI is running. If this page isn't opened, just copy and paste localhost:3000/ into your browser and press enter.
+
+Enjoy!
 
 <h4>Authors</h4>
 
