@@ -1,7 +1,7 @@
-<p align="center">
-# PORTFI
-## _Your portfolio and risk analysis software._
-</p>
+<h1 align="center">
+PORTFI
+Your portfolio and risk analysis software._
+</h1>
 
 Portfi provides a detailed analisis on a customizable stock portfolio provided by the user. Our application offers some of the most relevant tools that high price applications offer while being free to use and maintaining a nice user-friendly experience.
 
