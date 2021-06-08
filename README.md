@@ -78,8 +78,11 @@ After all of the above dependancies are installed:
 NPM should automatically open a new browser page on localhost:3000/ where PORTFI is running. If this page isn't opened, just copy and paste localhost:3000/ into your browser and press enter.
 
 ### Authors
+
 **Gianluca Dorelo** https://github.com/gdorelo
+
 **Martin Saavedra** https://github.com/martinmsaavedra/
+
 **Matias Zappino** https://github.com/matiaszappino/
 
 ### License
