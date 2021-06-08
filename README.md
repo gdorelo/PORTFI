@@ -33,7 +33,9 @@ PORTFI uses a number of open source projects to work properly:
 - [MySQL](https://www.mysql.com/) - open-source relational database management system.
 - [pandas](https://pandas.pydata.org/) - open source data analysis and manipulation tool.
 
+<h3>Architecture</h3>
 
+<img src="https://i.imgur.com/s25672S.png">
 
 <h3>Installation</h3>
 
