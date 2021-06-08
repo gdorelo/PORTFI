@@ -13,6 +13,7 @@ Portfi provides a detailed analisis on a customizable stock portfolio provided b
 More and more people are everyday thinking of a way to live with passive income. Investing in big companies has always been a low-risk go to strategy for this, but the problem we found is that the tools to make do this are very expensive and don't even provide user-friendly UIs, which makes investing in these markets a very discouraging experience. Our goal is to be able to provide a free tool that everybody can use to start building a portfolio with a decent investment strategy.
 
 <h3>Features</h3>
+
 - Ability to add main equities, stock, and ETF, traded in NYSE and NASDAQ markets.
 - Historic analysis of the stocks provided by the user.
 - Comparison of portfolios against main ratios and market benchmarks.
