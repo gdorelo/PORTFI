@@ -34,7 +34,9 @@ PORTFI uses a number of open source projects to work properly:
 
 <h3>Architecture</h3>
 
+
 <img src="https://i.imgur.com/s25672S.png">
+
 
 <h3>Installation</h3>
 
@@ -80,6 +82,11 @@ After all of the above dependancies are installed:
 - Run the front-end ```npm start```
 
 NPM should automatically open a new browser page on localhost:3000/ where PORTFI is running. If this page isn't opened, just copy and paste localhost:3000/ into your browser and press enter.
+
+![gif1](https://i.imgur.com/c7U9Lp1.gif)
+
+![gif2](https://i.imgur.com/D6yh5dc.gif)
+
 
 Enjoy!
 
