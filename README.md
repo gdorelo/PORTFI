@@ -1,7 +1,8 @@
 <h1 align="center">
 PORTFI
-  <p>Your portfolio and risk analysis software</p>
 </h1>
+
+<p align="center">Your portfolio and risk analysis software</p>
 
   Portfi provides a detailed analisis on a customizable stock portfolio provided by the user. Our application offers some of the most relevant tools that high price applications offer while being free to use and maintaining a nice user-friendly experience.
 
@@ -71,10 +72,12 @@ sudo apt-get install -y nodejs
 After all of the above dependancies are installed:
 
 - Clone this repository ```git clone https://github.com/gdorelo/PORTFI.git ```
-- ``` cd``` into the PORTFI folder
-- Run ```npm install``` to install React dependancies
-- Export the Flask global variable ```export FLASK_APP=api.web.app```
+- ```cd``` into the PORTFI folder
+- Setup the database wih ```cat flask-app/models/sql/setup_mysql.sql | mysql -u root -p```
+- Polulate the database with ```cat flask-app/models/sql/last_db.sql | mysql -u root -p```
+- Export the Flask global variable ```export FLASK_APP=flask-app.web.app```
 - Run the back-end ```flask run```
+- Open a new terminal and run ```cd react-app``` and  ```npm install``` to install React dependancies
 - Run the front-end ```npm start```
 
 NPM should automatically open a new browser page on localhost:3000/ where PORTFI is running. If this page isn't opened, just copy and paste localhost:3000/ into your browser and press enter.
