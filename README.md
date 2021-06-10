@@ -1,5 +1,5 @@
 <h1 align="center">
-PORTFI
+PORTFI - MVP version
 </h1>
 
 <p align="center">Your portfolio and risk analysis software</p>
@@ -38,8 +38,7 @@ PORTFI uses a number of open source projects to work properly:
 
 <h3>Installation</h3>
 
-PORTFI requires several technologies to be installed in order to run, this is why we recommend you to use it on our deployed live version here.
-
+PORTFI requires several technologies to be installed in order to run, this is why we recommend you to use it on our deployed live version when we deploy it (soon).
 If you still would like to run it for yourself, follow the steps below:
 
 - Install the necessary software (paste everything into a script and run it):
@@ -92,11 +91,7 @@ Enjoy!
 
 **Matias Zappino** https://github.com/matiaszappino/
 
-### License
 
-MIT
-
-**It's free!**
 
 
 
