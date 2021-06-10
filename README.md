@@ -1,12 +1,9 @@
 <h1 align="center">
 PORTFI
+  <p>Your portfolio and risk analysis software</p>
 </h1>
 
-<h2 align="center">
-Your portfolio and risk analysis software
-</h2>
-
-Portfi provides a detailed analisis on a customizable stock portfolio provided by the user. Our application offers some of the most relevant tools that high price applications offer while being free to use and maintaining a nice user-friendly experience.
+  Portfi provides a detailed analisis on a customizable stock portfolio provided by the user. Our application offers some of the most relevant tools that high price applications offer while being free to use and maintaining a nice user-friendly experience.
 
 <h3>Inspiration</h3>
 
@@ -31,6 +28,7 @@ PORTFI uses a number of open source projects to work properly:
 - [ReactJS](https://reactjs.org/) - open-source front-end JavaScript library.
 - [Material UI](https://material-ui.com/) - react component library built by Google.
 - [MySQL](https://www.mysql.com/) - open-source relational database management system.
+- [SQLAlchemy](https://www.sqlalchemy.org/) - open-source SQL toolkit and object-relational mapper for Python.
 - [pandas](https://pandas.pydata.org/) - open source data analysis and manipulation tool.
 
 <h3>Architecture</h3>
