@@ -76,7 +76,7 @@ After all of the above dependancies are installed:
 - ```cd``` into the PORTFI folder
 - Setup the database wih ```cat flask-app/models/sql/setup_mysql.sql | mysql -u root -p```
 - Polulate the database with ```cat flask-app/models/sql/last_db.sql | mysql -u root -p```
-- Export the Flask global variable ```export FLASK_APP=flask-app.web.app```
+- Export the Flask global variable ```cd flask-app``` then ```export FLASK_APP=web.app```
 - Run the back-end ```flask run```
 - Open a new terminal and run ```cd react-app``` and  ```npm install``` to install React dependancies
 - Run the front-end ```npm start```
