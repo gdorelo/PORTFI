@@ -7,7 +7,7 @@ export const Donut = () => {
   const [ charData, setChartData] = useState([])
   let [bonds, setBonds] = useState(parseFloat(0.0))
   let [stocks, setStocks] = useState(parseFloat(0.0))
-  let [cash, setCash] = useState(parseFloat(0.0))
+  let [cash, setCash] = useState(parseFloat(100.0))
 
   useEffect ( () => {
     let rawChartData = []
@@ -23,15 +23,23 @@ export const Donut = () => {
       };
     setChartData(rawChartData)
     //console.log("Chart Data", charData)
+    let stocks_ = 0
+    let bonds_ = 0
+    let cash_ = 0
     charData.map( (data) => {
-      setBonds(bonds += data.bonds);
-      setStocks(stocks += data.stocks);
+      stocks_ = stocks_ + (data.stocks * 100)
+      bonds_ = bonds_ + (data.bonds * 100) 
+      console.log("St",stocks_)
+      console.log("Bd",bonds_)
     })
-    let cash_ = Math.abs((bonds + stocks) -1 )
+    cash_ = (100 -  (bonds_ + stocks_))
     setCash(cash_)
-    setEstado({...estado, series:[parseFloat(bonds), parseFloat(cash_), parseFloat(stocks)]})
+    //console.log("cash", cash_)
+    setBonds(bonds_);
+    setStocks(stocks_);
+    setEstado({...estado, series:[parseFloat(bonds), parseFloat(cash), parseFloat(stocks)]})
     //console.log(estado)
-  }, [compositionData]);
+  }, [compositionData, cash]);
 
   
   const [estado, setEstado] = useState(
