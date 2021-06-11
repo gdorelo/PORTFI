@@ -29,8 +29,8 @@ export const Donut = () => {
     charData.map( (data) => {
       stocks_ = stocks_ + (data.stocks * 100)
       bonds_ = bonds_ + (data.bonds * 100) 
-      console.log("St",stocks_)
-      console.log("Bd",bonds_)
+      //console.log("St",stocks_)
+      //console.log("Bd",bonds_)
     })
     cash_ = (100 -  (bonds_ + stocks_))
     setCash(cash_)
