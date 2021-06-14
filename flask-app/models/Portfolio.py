@@ -87,10 +87,11 @@ class Portfolio(Base):
         ) / df_variacion['Benchmark'].std()
         anual_sharpe_port = ((252**0.02) * sharpe_port) * 10
         anual_sharpe_bech = ((252**0.02) * sharpe_bech) * 10
-        annual_sharpe_dict['Portfolio'] = round(anual_sharpe_port, 3)
-        annual_sharpe_dict['Benchmark'] = round(anual_sharpe_bech, 3)
+        annual_sharpe_dict['Portfolio'] = anual_sharpe_port
+        annual_sharpe_dict['Benchmark'] = anual_sharpe_bech
         data = pd.Series(data=annual_sharpe_dict, index=[
                          "Portfolio", "Benchmark"])
+        data = round(data,2)
         self.performance['sharpe'] = data
         self.performance_Flask['sharpe'] = data.to_dict()
 
@@ -101,6 +102,7 @@ class Portfolio(Base):
         df_negativos = df_variaciones[df_variaciones < target_return]
         df_negativos = df_negativos.fillna(0)  # me cambia los NaN por 0
         downside_risk = df_negativos.std() * np.sqrt(252) * 100
+        downside_risk = round(downside_risk,2)
         self.performance['downside_risk'] = downside_risk
         self.performance_Flask['downside_risk'] = downside_risk.to_dict()
 
@@ -121,11 +123,20 @@ class Portfolio(Base):
         monthly_drawdown = crecimientos / rolling_max - 1
         monthly_drawdown * 100
         drawdowns = monthly_drawdown.min() * 100
+        drawdowns = round(drawdowns,2)
         self.performance['drawdown'] = drawdowns
         self.performance_Flask['drawdown'] = drawdowns.to_dict()
-        array_dates = crecimientos.index.tolist()
+        array_dates = crecimientos.index.strftime("%b %d").tolist()
+
         array_port = crecimientos['Portafolio'].values.tolist()
         array_bench = crecimientos['Benchmark'].values.tolist()
+
+        for index, element in enumerate(array_port):
+            array_port[index] = round(element, 2)
+        
+        for index, element in enumerate(array_bench):
+             array_bench[index] = round(element, 2)
+
         self.performance_Flask['ret_portfolio'] = array_port
         self.performance_Flask['ret_benchmark'] = array_bench
         self.performance_Flask['ret_dates'] = array_dates
@@ -136,12 +147,14 @@ class Portfolio(Base):
         primero = crecimientos.iloc[0]
         returns = ((ultimo - primero) - 1)
         ann_returns = (1 + returns/100).pow(252/len(crecimientos))-1
-        self.performance['returns'] = (ann_returns * 100)
-        self.performance_Flask['returns'] = (ann_returns * 100).to_dict()
+        ann_returns = round((ann_returns * 100),2)
+        self.performance['returns'] = ann_returns
+        self.performance_Flask['returns'] = ann_returns.to_dict()
 
     def calculate_volatility(self, bechmark_obj):
         df_variaciones = self.calculate_variation(bechmark_obj)
         volatility = df_variaciones.std()*np.sqrt(252)
+        volatility = round(volatility,2)
         self.performance['volatility'] = (volatility * 100)
         self.performance_Flask['volatility'] = (volatility * 100).to_dict()
 
