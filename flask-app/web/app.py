@@ -168,7 +168,7 @@ def calculus():
         portfolio.get_data_API(start, end)
         benchmark.get_data_API(start, end)
         portfolio.add_performance(benchmark)
-        print(portfolio.performance_Flask)
+        # print(portfolio.performance_Flask)
         return jsonify(portfolio.performance_Flask)
     finally:
         pass

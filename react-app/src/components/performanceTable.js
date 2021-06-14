@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,6 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { PortfiContext } from './context/portfiContext';
 
 const useStyles = makeStyles({
   table: {
@@ -14,20 +15,20 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(metric, portfolio, benchmark) {
-  return { metric, portfolio, benchmark };
-}
+// function createData(metric, portfolio, benchmark) {
+//   return { metric, portfolio, benchmark };
+// }
 
-const rows = [
-  createData('Return', 10.99, 7.58),
-  createData('Std Dev', 9.70, 10.16),
-  createData('Sharpe Ratio', 0.57, 1.48),
-  createData('Volatility', 14.60, 7.19),
-  createData('Downside Risk', 10.11, 4.03),
-  createData('Down Capture Ratio', 86.88, 100.00),
-  createData('Up Capture Ratio', 103.85, 100.00),
+// const rows = [
+//   createData('Return', 10.99, 7.58),
+//   createData('Std Dev', 9.70, 10.16),
+//   createData('Sharpe Ratio', 0.57, 1.48),
+//   createData('Volatility', 14.60, 7.19),
+//   createData('Downside Risk', 10.11, 4.03),
+//   createData('Down Capture Ratio', 86.88, 100.00),
+//   createData('Up Capture Ratio', 103.85, 100.00),
 
-];
+// ];
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -48,7 +49,28 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 export default function PerformanceTable() {
+  const { performance } = useContext(PortfiContext)
+  const {sharpe, volatility, drawdown, downside_risk, returns } = performance
   const classes = useStyles();
+  
+  
+  useEffect( () =>{
+    //console.log(performance.sharpe.Portfolio, performance.sharpe.Benchmark)
+    
+  },[performance])
+  
+  function createData(metric, portfolio, benchmark) {
+    return { metric, portfolio, benchmark };
+  }
+
+  const rows = [
+    createData('Return', performance.returns.Portafolio, performance.returns.Benchmark),
+    createData('Sharpe Ratio', performance.sharpe.Portfolio, performance.sharpe.Benchmark),
+    createData('Volatility', performance.volatility.Portafolio, performance.volatility.Benchmark),
+    createData('Downside Risk', performance.downside_risk.Portafolio, performance.downside_risk.Benchmark),
+    createData('Drawdown', performance.drawdown.Portafolio, performance.drawdown.Benchmark)
+  ];
+  
 
   return (
     <TableContainer component={Paper} elevation={0}>

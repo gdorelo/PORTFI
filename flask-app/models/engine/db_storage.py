@@ -28,7 +28,7 @@ class DBStorage:
         """Instantiate a DBStorage object"""
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
                                       format('portfi_dev',
-                                             'portfi',
+                                             'PortfiPass1!',
                                              'localhost',
                                              'portfi'))
 
@@ -147,11 +147,14 @@ class DBStorage:
         stocks = 0
         bonds = 0 
         obj = self.get_ticker(ticker)
-        if obj.asset_type == "ETF":
-            etf_obj = self.__session.query(Relationship_ETF).filter_by(ticker=ticker).first()
-            bonds = etf_obj.bond * weight
-            stocks = etf_obj.stock * weight
-        elif obj.asset_type == "EQUITY":
+        if obj.asset_type == "ETF" and obj != None:
+            try:
+                etf_obj = self.__session.query(Relationship_ETF).filter_by(ticker=ticker).first()
+                bonds = etf_obj.bond * weight
+                stocks = etf_obj.stock * weight
+            except:
+                pass
+        elif obj.asset_type == "EQUITY" and obj != None:
             stocks = weight
 
         asset_composition = {'bonds':bonds, 'stocks':stocks}

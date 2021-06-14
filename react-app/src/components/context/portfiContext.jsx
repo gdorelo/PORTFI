@@ -12,6 +12,36 @@ export const PortfiProvider = ({children}) => {
     const [listAssets, setListAssets] = useState([])
     const [compositionData, setCompositionData] = useState([])
     
+    const [composition_portfoloio, setCompositionPortfolio] = useState([])
+    const [performance, setPerformance] = useState({
+        sharpe: {
+            Portfolio:0,
+            Benchmark:0
+        },
+        volatility:{
+            Portafolio:0,
+            Benchmark:0
+        },
+        drawdown:{
+            Portafolio:0,
+            Benchmark:0
+        },
+        downside_risk:{
+            Portafolio:0,
+            Benchmark:0
+        },
+        returns:{
+            Portafolio:0,
+            Benchmark:0
+        },
+        
+        ret_portfolio : [],
+
+        ret_benchmark : [],
+
+        ret_dates : []
+
+    })
       
     useEffect ( async () =>{
         if (loading) {
@@ -41,40 +71,9 @@ export const PortfiProvider = ({children}) => {
         setDataFromBackend(list_assets || [])
     }
 
-    // function DataForChart(data) {
-    //     let ticker = ""
-    //     let composition = {}
-    //     let asset = {}
-    //     for (let i = 0; i < data.length; i++){
-    //         ticker = data[i].ticker;
-    //         composition = data[i].composition;
-    //         asset[ticker] = composition;
-    //         //list_assets.push(asset)
-    //         setListAssets(...listAssets, asset)
-    //     };
-    //     setCompositionData(listAssets)
-    //     console.log("lista de assets", listAssets)
-    //     console.log("Composition Data", compositionData)
-    // };
-
-    // useEffect(async () => {
-    //     if (loadingChart) {
-    //         const url = "/composition";
-    //         const response = await fetch(url);
-    //         const data = await response.json();
-    //         let bonds = data['bonds']
-    //         let stocks = data['stocks']
-    //         let cash = data['cash']
-    //         let array = [bonds, cash, stocks]
-    //         setchartData({series:array})
-    //         console.log(chartData)
-    //         setLoadingChart(false)
-    //     }
-    // },[dataFiltrada, loadingChart])
     
     return (
-        <PortfiContext.Provider value={{dataFromBackend, setDataFromBackend, dataFiltrada, setDataFiltrada, setLoading, setLoadingChart, listAssets, setListAssets, compositionData, setCompositionData, loading
-        , setLoadingAnimation, loadingAnimation }}>
+        <PortfiContext.Provider value={{dataFromBackend, setDataFromBackend, dataFiltrada, setDataFiltrada, setLoading, setLoadingChart, listAssets, setListAssets, compositionData, setCompositionData, loading, setLoadingAnimation, loadingAnimation, composition_portfoloio, setCompositionPortfolio, performance, setPerformance  }}>
             {children}
         </PortfiContext.Provider>
         ) 

@@ -123,6 +123,12 @@ class Portfolio(Base):
         drawdowns = monthly_drawdown.min() * 100
         self.performance['drawdown'] = drawdowns
         self.performance_Flask['drawdown'] = drawdowns.to_dict()
+        array_dates = crecimientos.index.tolist()
+        array_port = crecimientos['Portafolio'].values.tolist()
+        array_bench = crecimientos['Benchmark'].values.tolist()
+        self.performance_Flask['ret_portfolio'] = array_port
+        self.performance_Flask['ret_benchmark'] = array_bench
+        self.performance_Flask['ret_dates'] = array_dates
 
     def calculate_annual_returns(self, bechmark_obj):
         crecimientos = self.performance['crecimientos']

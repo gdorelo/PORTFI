@@ -3,7 +3,7 @@ import "./Main.css";
 import MouseOverPopover from "../Popover";
 import { Donut } from "../donut_graph";
 import InputField from "../Datatable/InputField";
-import LineGraph from "../lineGraph";
+import { LineGraph } from "../lineGraph";
 import PerformanceTable from "../performanceTable"
 import { Loading } from '../loading'
 import { PortfiContext } from "../context/portfiContext";
