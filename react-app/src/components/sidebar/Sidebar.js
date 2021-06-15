@@ -5,7 +5,7 @@ import React from "react";
 // import PortfolioA from "../Portfolios/PortfolioA.js"
 // import PortfolioB from "../Portfolios/PortfolioB.js"
 // import PortfolioC from "../Portfolios/PortfolioC.js"
-import { NavLink, BrowserRouter as Router } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Sidebar = (props) => {
   return (
@@ -13,7 +13,13 @@ const Sidebar = (props) => {
       <div className="sidebar__title">
         <div className="sidebar__img">
           <img src={logo} alt="logo" />
-          <h1>PORTFI</h1>
+          <NavLink
+            style={{ textDecoration: "none", color: "white" }}
+            exact
+            to="/"
+          >
+          <h3>PORTFI</h3>
+          </NavLink>
         </div>
         <i
           onClick={() => props.closeSidebar()}
@@ -29,7 +35,7 @@ const Sidebar = (props) => {
             exact
             className="sidebar__link"
             activeClassName="active_menu_link"
-            to="/"
+            to="/dashboard"
           >
             <i className="fa fa-home" />
             Dashboard
