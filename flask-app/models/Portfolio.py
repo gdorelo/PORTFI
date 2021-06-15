@@ -42,11 +42,20 @@ class Portfolio(Base):
         tickers_list, _ = self.make_assets_lists()
         datos = DataReader(tickers_list, "yahoo", start, end)
         datos = datos["Adj Close"]
-    
         self.performance['datos'] = datos
         self.performance['start'] = start
         self.performance['end'] = end
 
+    def save_DataFrame(self, dataframe, start=date(2021,5,1), end=date.today(), ret_dates=[]):
+        self.performance['datos'] = dataframe
+        self.performance['start'] = start
+        self.performance['end'] = end
+        dates_list = []
+        for date in ret_dates:
+            dates_list.append(date.strftime("%b %d"))
+        self.performance_Flask['ret_dates'] = dates_list#.strftime("%b %d").tolist()
+        #print(self.performance_Flask['ret_dates'])
+        
     def calculate_available(self):
         _, weigths = self.make_assets_lists()
         available = 1 - sum(weigths)
@@ -57,9 +66,10 @@ class Portfolio(Base):
         datos = self.performance.get('datos')
         start = self.performance.get('start')
         end = self.performance.get('end')
-        df_portfolio = pd.date_range(start=start, end=end, freq="B")
-        mask1 = datos.index.isin(df_portfolio)
-        datos_mensuales_port = datos.loc[mask1]
+
+        #df_portfolio = pd.date_range(start=start, end=end, freq="B")
+        #mask1 = datos.index.isin(df_portfolio)
+        datos_mensuales_port = datos#.loc[mask1]
         retornos_portfolio = datos_mensuales_port.pct_change().dropna()
         return retornos_portfolio
 
@@ -107,17 +117,15 @@ class Portfolio(Base):
         self.performance_Flask['downside_risk'] = downside_risk.to_dict()
 
     def calculate_drawdown(self, bechmark_obj):
-        port_ret = self.calculate_weighted_returns(
-            self.calculate_return())  # eliminar redundancia
-        bench_ret = bechmark_obj.calculate_weighted_returns(
-            bechmark_obj.calculate_return())  # eliminar redundancia
+        port_ret = self.calculate_weighted_returns(self.calculate_return())  # eliminar redundancia
+        bench_ret = bechmark_obj.calculate_weighted_returns(bechmark_obj.calculate_return())  # eliminar redundancia
         crec_port = (1 + port_ret).cumprod()*100  # eliminar redundancia
         crec_bench = (1 + bench_ret).cumprod()*100  # eliminar redundancia
-        # eliminar redundancia
-        crecimientos = pd.concat([crec_port, crec_bench], axis=1)
+        crecimientos = pd.concat([crec_port, crec_bench], axis=1)# eliminar redundancia
         crecimientos.columns = ["Portafolio",
                                 "Benchmark"]  # eliminar redundancia
         self.performance['crecimientos'] = crecimientos
+        
         rolling_max = crecimientos.rolling(
             min_periods=1, window=12).max()  # me agarra el maximo
         monthly_drawdown = crecimientos / rolling_max - 1
@@ -126,8 +134,8 @@ class Portfolio(Base):
         drawdowns = round(drawdowns,2)
         self.performance['drawdown'] = drawdowns
         self.performance_Flask['drawdown'] = drawdowns.to_dict()
-        array_dates = crecimientos.index.strftime("%b %d").tolist()
-
+        
+        #array_dates = pd.to_datetime(crecimientos.index).strftime("%b %d").tolist()
         array_port = crecimientos['Portafolio'].values.tolist()
         array_bench = crecimientos['Benchmark'].values.tolist()
 
@@ -139,7 +147,7 @@ class Portfolio(Base):
 
         self.performance_Flask['ret_portfolio'] = array_port
         self.performance_Flask['ret_benchmark'] = array_bench
-        self.performance_Flask['ret_dates'] = array_dates
+        #self.performance_Flask['ret_dates'] = array_dates
 
     def calculate_annual_returns(self, bechmark_obj):
         crecimientos = self.performance['crecimientos']
@@ -154,9 +162,10 @@ class Portfolio(Base):
     def calculate_volatility(self, bechmark_obj):
         df_variaciones = self.calculate_variation(bechmark_obj)
         volatility = df_variaciones.std()*np.sqrt(252)
+        volatility = volatility * 100
         volatility = round(volatility,2)
-        self.performance['volatility'] = (volatility * 100)
-        self.performance_Flask['volatility'] = (volatility * 100).to_dict()
+        self.performance['volatility'] = (volatility)
+        self.performance_Flask['volatility'] = (volatility).to_dict()
 
     def add_performance(self, benchmark_obj):
         """Adds functions values to the performance dict"""
@@ -165,7 +174,6 @@ class Portfolio(Base):
         self.calculate_volatility(benchmark_obj)
         self.calculate_drawdown(benchmark_obj)
         self.calculate_downside_risk(benchmark_obj)
-        self.calculate_annual_returns(benchmark_obj)
-      
-        
+        self.calculate_annual_returns(benchmark_obj)   
+
 

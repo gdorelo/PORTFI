@@ -2,8 +2,8 @@
 """
 Contains the class DBStorage
 """
-
-from sqlalchemy import create_engine
+import pandas as pd
+from sqlalchemy import create_engine, select
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from models import User, Portfolio, Asset
@@ -13,11 +13,13 @@ from models.Portfolio import Portfolio
 from models.Relationship_PA import Relationship_PA
 from models.Relationship_UP import Relationship_UP
 from models.Relationship_ETF import Relationship_ETF
+from models.Prices import Price
 import models
 
 from models.Base import Base
 
 classes = {"Asset": Asset, "Portfolio": Portfolio, "User": User}
+
 
 class DBStorage:
     """interaacts with the MySQL database"""
@@ -44,7 +46,7 @@ class DBStorage:
     def save(self):
         """commit all changes of the current database session"""
         self.__session.commit()
-    
+
     def reload(self):
         """reloads data from the database"""
         Base.metadata.create_all(self.__engine)
@@ -55,7 +57,27 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
-    
+
+    def get_dataFrame(self,ticker_list, start, end):
+        dates = []
+        SQLquery = select(Price.date, Price.price, Price.ticker).where(
+                Price.ticker == ticker_list[0]).filter(Price.date >= start, Price.date <= end)
+        objetos = self.__session.execute(SQLquery)
+        for o in objetos.all():
+            dates.append(o.date)
+        prices = []
+        dataFrame = pd.DataFrame(index=dates)
+        dataFrame.index.name = "Date"
+        for ticker in ticker_list:
+            SQLquery = select(Price.date, Price.price, Price.ticker).where(
+                Price.ticker == ticker).filter(Price.date >= start, Price.date <= end)
+            objetos = self.__session.execute(SQLquery)
+            prices = []
+            for o in objetos.all():
+                prices.append(o.price)
+            dataFrame[o.ticker] = prices
+        return dataFrame, dates
+        
     def get_object(self, cls, id):
         """
         Returns the object based on the class name and its ID, or
@@ -68,21 +90,25 @@ class DBStorage:
             objeto = self.__session.query(cls).filter_by(asset_id=id).first()
             return objeto
         if cls is Portfolio:
-            objeto = self.__session.query(cls).filter_by(portfolio_id=id).first()
-            assetts_obj = self.__session.query(Relationship_PA).filter_by(portfolio_id=id)
+            objeto = self.__session.query(
+                cls).filter_by(portfolio_id=id).first()
+            assetts_obj = self.__session.query(
+                Relationship_PA).filter_by(portfolio_id=id)
             new_dict = {}
             for obj in assetts_obj:
                 new_dict[obj.ticker] = obj.weight
             objeto.assets = new_dict
             objeto.performance = {}
             objeto.assets_composition = {}
+            objeto.performance_Flask = {}
             return objeto
-        
+
         return None
-    
+
     def get_ticker(self, ticker):
         try:
-            objeto = self.__session.query(Asset).filter_by(ticker=ticker).first()
+            objeto = self.__session.query(
+                Asset).filter_by(ticker=ticker).first()
             return objeto
         except:
             return None
@@ -96,7 +122,8 @@ class DBStorage:
         for ticker, weight in models.portfolio.assets.items():
             obj = self.get_ticker(ticker)
             if obj.asset_type == "ETF":
-                etf_obj = self.__session.query(Relationship_ETF).filter_by(ticker=ticker).first()
+                etf_obj = self.__session.query(
+                    Relationship_ETF).filter_by(ticker=ticker).first()
                 bonds += etf_obj.bond * weight
                 etf_stocks += etf_obj.stock * weight
             elif obj.asset_type == "EQUITY":
@@ -106,7 +133,7 @@ class DBStorage:
             models.portfolio.performance['bonds'] = bonds
             models.portfolio.performance['stocks'] = total_stocks
             models.portfolio.performance['cash'] = cash
-            
+
     def calculate_composition(self, portfolio):
         """Calculate Composition of the Portfolio"""
         bonds = 0
@@ -116,7 +143,8 @@ class DBStorage:
         for ticker, weight in portfolio.assets.items():
             obj = self.get_ticker(ticker)
             if obj.asset_type == "ETF":
-                etf_obj = self.__session.query(Relationship_ETF).filter_by(ticker=ticker).first()
+                etf_obj = self.__session.query(
+                    Relationship_ETF).filter_by(ticker=ticker).first()
                 bonds += etf_obj.bond * weight
                 etf_stocks += etf_obj.stock * weight
             elif obj.asset_type == "EQUITY":
@@ -132,24 +160,27 @@ class DBStorage:
         storage = DBStorage()
         storage.reload()
         for ticker, weight in main_portfolio.assets.items():
-            relation_PA = Relationship_PA(main_portfolio.portfolio_id, ticker, weight).first()  
+            relation_PA = Relationship_PA(
+                main_portfolio.portfolio_id, ticker, weight).first()
             storage.new(relation_PA)
-        relation_UP = Relationship_UP(main_portfolio.portfolio_id, user_obj.user_id).first()
+        relation_UP = Relationship_UP(
+            main_portfolio.portfolio_id, user_obj.user_id).first()
         storage.new(relation_UP)
         storage.save()
         storage.close()
 
     def rollback_function(self):
         self.__session.rollback()
-    
+
     def calculate_asset_composition(self, ticker, weight):
         """Calculate Composition of the Asset"""
         stocks = 0
-        bonds = 0 
+        bonds = 0
         obj = self.get_ticker(ticker)
         if obj.asset_type == "ETF" and obj != None:
             try:
-                etf_obj = self.__session.query(Relationship_ETF).filter_by(ticker=ticker).first()
+                etf_obj = self.__session.query(
+                    Relationship_ETF).filter_by(ticker=ticker).first()
                 bonds = etf_obj.bond * weight
                 stocks = etf_obj.stock * weight
             except:
@@ -157,5 +188,5 @@ class DBStorage:
         elif obj.asset_type == "EQUITY" and obj != None:
             stocks = weight
 
-        asset_composition = {'bonds':bonds, 'stocks':stocks}
+        asset_composition = {'bonds': bonds, 'stocks': stocks}
         models.portfolio.assets_composition[ticker] = asset_composition

@@ -15,22 +15,9 @@ app = Flask(__name__)
 """storage = DBStorage()"""
 cors = CORS(app, resources={r"/portfolio/*": {"origins": "*"}})
 
-@app.route('/portfolio', strict_slashes=False)
-@app.route('/portfolio', methods=["GET", "POST"])
+@app.route('/portfolio', methods=["GET", "POST"], strict_slashes=False)
 def dashboard_form():
     models.portfolio.calculate_available()
-    # if request.method == "POST":
-    #     ticker, weight, start, end = verify_input()
-    #     if ticker is not None and weight is not None and start is not None and end is not None:
-    #         if verify_weight(ticker, weight, models.portfolio.assets):
-    #             models.portfolio.get_data_API(start, end)
-    #             models.bechmarck.get_data_API(start, end)
-    #             models.portfolio.calculate_available()
-    #             portfolio_summary = summary_dict()
-    #             list_of_portfolio = [value for value in portfolio_summary.values()]
-    #             return jsonify(list_of_portfolio)
-    #             # return render_template("index.html", portfolio=models.portfolio, bechmarck=models.bechmarck)
-    # # return render_template("index.html", portfolio=models.portfolio, bechmarck=models.bechmarck)
     calculate_asset_compostion()
     portfolio_summary = summary_dict()
     list_of_portfolio = [value for value in portfolio_summary.values()]
@@ -165,8 +152,20 @@ def calculus():
             return None
         portfolio, benchmark = asing_Assets(jsonData['dataFiltrada'])
         portfolio.calculate_available()
-        portfolio.get_data_API(start, end)
-        benchmark.get_data_API(start, end)
+        
+        ############# LLAMADA A LA API #####################################
+        # portfolio.get_data_API(start, end)
+        # benchmark.get_data_API(start, end)
+        
+        ############# LLAMADA A NUESTRA BASE DE DATOS ######################
+        port_ticker, _ = models.portfolio.make_assets_lists()
+        portfolio_df, dates_a = models.storage.get_dataFrame(port_ticker,start,end)
+        portfolio.save_DataFrame(portfolio_df, start, end, dates_a)
+        bench_ticker, _ = benchmark.make_assets_lists()
+        bechmarck_df, dates_a = models.storage.get_dataFrame(bench_ticker, start, end)
+        benchmark.save_DataFrame(bechmarck_df, start, end, dates_a)
+        ####################################################################
+        
         portfolio.add_performance(benchmark)
         # print(portfolio.performance_Flask)
         return jsonify(portfolio.performance_Flask)
