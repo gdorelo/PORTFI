@@ -10,11 +10,9 @@ class Relationship_ETF(Base):
     ticker = Column(String(20), ForeignKey('assets.ticker'), primary_key=True)
     bond = Column(Float)
     stock = Column(Float)
-    
     relation = relationship("Asset")
 
     def __init__(self, **kwargs):
         if kwargs:
             for key, value in kwargs.items():
-                #if key != "__class__":
                 setattr(self, key, value)

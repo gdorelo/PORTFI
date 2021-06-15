@@ -15,7 +15,6 @@ from models.Relationship_UP import Relationship_UP
 from models.Relationship_ETF import Relationship_ETF
 from models.Prices import Price
 import models
-
 from models.Base import Base
 
 classes = {"Asset": Asset, "Portfolio": Portfolio, "User": User}
@@ -35,30 +34,31 @@ class DBStorage:
                                              'portfi'))
 
     def all(self, cls=None):
-        """query on the current database session"""
+        """Query on the current database session"""
         objs = self.__session.query(cls)
         return objs
 
     def new(self, obj):
-        """add the object to the current database session"""
+        """Add the object to the current database session"""
         self.__session.add(obj)
 
     def save(self):
-        """commit all changes of the current database session"""
+        """Commit all changes of the current database session"""
         self.__session.commit()
 
     def reload(self):
-        """reloads data from the database"""
+        """Reloads data from the database"""
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
 
     def close(self):
-        """call remove() method on the private session attribute"""
+        """Call remove() method on the private session attribute"""
         self.__session.remove()
 
     def get_dataFrame(self,ticker_list, start, end):
+        """Builds dataframe from data from API"""
         dates = []
         SQLquery = select(Price.date, Price.price, Price.ticker).where(
                 Price.ticker == ticker_list[0]).filter(Price.date >= start, Price.date <= end)
@@ -106,6 +106,7 @@ class DBStorage:
         return None
 
     def get_ticker(self, ticker):
+        """Retrieves object from DB using the ticker symbol"""
         try:
             objeto = self.__session.query(
                 Asset).filter_by(ticker=ticker).first()
@@ -170,6 +171,7 @@ class DBStorage:
         storage.close()
 
     def rollback_function(self):
+        """Session rollback"""
         self.__session.rollback()
 
     def calculate_asset_composition(self, ticker, weight):
