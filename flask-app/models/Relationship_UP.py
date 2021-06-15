@@ -9,7 +9,6 @@ class Relationship_UP(Base):
     __tablename__ = 'relationship_up'
     user_id = Column(String(60), ForeignKey('users.user_id'), primary_key=True)
     portfolio_id = Column(String(60), ForeignKey('portfolio.portfolio_id'), primary_key=True)
-
     relation = relationship("User")
 
     def __init__(self, portafolio_id, user_id):

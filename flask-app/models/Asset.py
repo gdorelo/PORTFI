@@ -18,5 +18,4 @@ class Asset(Base):
         """Init Method"""
         if kwargs:
             for key, value in kwargs.items():
-                #if key != "__class__":
                 setattr(self, key, value)

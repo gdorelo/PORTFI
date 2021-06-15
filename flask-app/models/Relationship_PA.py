@@ -10,7 +10,6 @@ class Relationship_PA(Base):
     portfolio_id = Column(String(50), ForeignKey('portfolio.portfolio_id'), primary_key=True)
     ticker = Column(String(20), ForeignKey('assets.ticker'), primary_key=True)
     weight = Column(Float)
-    
     relation = relationship("Portfolio")
 
     def __init__(self, portafolio_id, ticker, weight):

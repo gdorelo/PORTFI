@@ -1,6 +1,7 @@
 --
 -- Table structure for table `assets`
 --
+
 USE portfi;
 
 CREATE TABLE IF NOT EXISTS `assets` (
@@ -53,3 +54,12 @@ CREATE TABLE IF NOT EXISTS `relationship_etf` (
   `stock` FLOAT NOT NULL,
   FOREIGN KEY(ticker) REFERENCES assets(ticker)
 );
+
+CREATE TABLE `prices` (
+  `ticker` VARCHAR(20) NOT NULL, 
+  `date` DATE, 
+  `price` FLOAT, 
+  FOREIGN KEY(ticker) REFERENCES assets (ticker)
+);
+
+CREATE INDEX idx_tick ON prices (ticker(20));
