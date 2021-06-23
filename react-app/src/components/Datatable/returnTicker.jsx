@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import React, { useState } from "react";
 import UsePost from './addPost'
 import { useContext } from "react";
 import { PortfiContext } from "../context/portfiContext";
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Icon from '@material-ui/core/Icon';
 import CalculatePortfi from './calculate_portfolio'
-import { Loading } from '../loading'
 
 
 const useStyles = makeStyles((theme) => ({

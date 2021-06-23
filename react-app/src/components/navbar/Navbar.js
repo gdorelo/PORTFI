@@ -1,8 +1,8 @@
 import React from 'react'
 import "./Navbar.css";
-import avatar from "../../assets/avatar.svg";
-import { Link, BrowserRouter as Router } from 'react-router-dom';
-import SignUp from "../UserSettings/SignUp.js"
+// import avatar from "../../assets/avatar.svg";
+import { Link } from 'react-router-dom';
+// import SignUp from "../UserSettings/SignUp.js"
 
 const Navbar = ({ sidebarOpen, openSidebar }) => {
   return (

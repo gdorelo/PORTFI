@@ -5,6 +5,8 @@ import IconButton from "@material-ui/core/IconButton";
 // react components for routing our app without refresh
 import { Link } from "react-router-dom";
 
+import { Link as ScrollLink } from "react-scroll";
+
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -26,17 +28,31 @@ export default function HeaderLinks(props) {
   const classes = useStyles();
   return (
     <List className={classes.list}>
+      <ListItem className={classes.listItem}>
+        <ScrollLink to="features" spy={true} smooth={true}>
+          <Button color="transparent" className={classes.navLink}>
+            Features
+          </Button>
+        </ScrollLink>
+        <ScrollLink to="about" spy={true} smooth={true}>
+          <Button color="transparent" className={classes.navLink}>
+            About Us
+          </Button>
+        </ScrollLink>
+      </ListItem>
 
       <ListItem className={classes.listItem}>
         <Button
           href="https://github.com/gdorelo/PORTFI"
           color="transparent"
-          target="_blank"
           className={classes.navLink}
+          target="_blank"
         >
-          <i className={" fab fa-github"} />Github
+          <i className={" fab fa-github"} />
+          Github
         </Button>
       </ListItem>
+
       {/* <ListItem className={classes.listItem}>
         <Tooltip title="Delete">
           <IconButton aria-label="Delete">

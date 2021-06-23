@@ -20,7 +20,7 @@ import styles from "assets/jss/material-kit-react/views/landingPage.js";
 // Sections for this page
 import ProductSection from "./Sections/ProductSection.js";
 import TeamSection from "./Sections/TeamSection.js";
-import WorkSection from "./Sections/WorkSection.js";
+import AboutSection from "./Sections/AboutSection.js";
 
 const dashboardRoutes = [];
 
@@ -30,7 +30,7 @@ export default function LandingPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
   return (
-    <div className="headerGeneral">
+    <div  id="home" className="headerGeneral">
       <Header
         color="transparent"
         routes={dashboardRoutes}
@@ -57,7 +57,7 @@ export default function LandingPage(props) {
               </h4>
               <br />
               <Button
-                color="danger"
+                color="primary"
                 size="lg"
                 href="/dashboard"
                 rel="noopener noreferrer"
@@ -71,9 +71,13 @@ export default function LandingPage(props) {
       </Parallax>
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}>
+          <div id="features">
           <ProductSection />
+          </div>
+          <div id="about">
           <TeamSection />
-          <WorkSection />
+          <AboutSection />
+          </div>
         </div>
       </div>
       <Footer />

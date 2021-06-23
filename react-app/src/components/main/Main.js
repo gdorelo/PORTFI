@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./Main.css";
 import MouseOverPopover from "../Popover";
 import { Donut } from "../donut_graph";
 import InputField from "../Datatable/InputField";
 import { LineGraph } from "../lineGraph";
 import PerformanceTable from "../performanceTable"
-import { Loading } from '../loading'
 import { PortfiContext } from "../context/portfiContext";
 import { useContext } from "react";
 import PuffLoader from "react-spinners/PuffLoader";
-import { css, cx } from '@emotion/css'
-//new Main 
+//new Main
 
 const Main = () => {
   const [series, setSeries] = useState();
@@ -48,8 +46,8 @@ const Main = () => {
           <PerformanceTable />
           </div>
         </div>
-      </div>)  } 
-      
+      </div>)  }
+
     </main>
   );
 };

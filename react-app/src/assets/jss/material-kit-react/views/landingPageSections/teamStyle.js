@@ -1,16 +1,16 @@
-import { cardTitle, title } from "assets/jss/material-kit-react.js";
+import { title } from "assets/jss/material-kit-react.js";
 import imagesStyle from "assets/jss/material-kit-react/imagesStyles.js";
 
 const teamStyle = {
   section: {
-    padding: "70px 0",
+    marginTop: "60px",
     textAlign: "center",
   },
   title: {
     ...title,
     fontSize: "2.25rem",
     marginBottom: "1rem",
-    marginTop: "30px",
+    marginTop: "10px",
     minHeight: "32px",
     textDecoration: "none",
   },

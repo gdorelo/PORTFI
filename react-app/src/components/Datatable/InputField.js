@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { PortfiContext } from "../context/portfiContext";
 import "../main/Main.css"
 import Datatable from "./Datatable";
 import ReturnTicker from "./returnTicker"
 
 export default function InputField({ data }) {
-    
+
     const { dataFromBackend } = useContext(PortfiContext)
-    
+
     const [value, setValue] = useState({
         ticker : '',
         weight : 0,
@@ -18,7 +18,7 @@ export default function InputField({ data }) {
         endDate, startDate, ticker, weight
     } = value
 
-    
+
     return (
         <div className="inputField">
         <div>
@@ -30,5 +30,5 @@ export default function InputField({ data }) {
         </div>
     </div>
     );
-    
+
 }

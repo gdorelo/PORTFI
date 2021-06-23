@@ -29,16 +29,6 @@ export default function Footer(props) {
   return (
     <footer className={footerClasses}>
       <div className={classes.container}>
-        <div className={classes.right}>
-          &copy; {1900 + new Date().getYear()} ,  This Landing Page was made with the Material Kit by{" "}
-          <a
-            href="https://www.creative-tim.com?ref=mkr-footer"
-            className={aClasses}
-            target="_blank"
-          >
-            Creative Tim.
-          </a>{" "}
-        </div>
       </div>
     </footer>
   );

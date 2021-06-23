@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import axios from 'axios'
+import React, { useEffect, useContext } from "react";
 import { PortfiContext } from "../context/portfiContext";
 import delPost from './delPost'
 import Table from '@material-ui/core/Table';
@@ -30,11 +29,11 @@ export default function Datatable() {
   useEffect(() => {
     setDataFiltrada(dataFromBackend)
   }, [dataFromBackend])
-  
+
   useEffect(() => {
     setLoading(true)
   }, [])
-  
+
   const columns = dataFromBackend[0] && Object.keys(dataFromBackend[0])
 
   const deleteAsset = (id) => {
@@ -57,7 +56,7 @@ export default function Datatable() {
     setPage(0);
   };
 
-  return ( 
+  return (
     <Paper elevation={0} >
       <TableContainer style={{ maxHeight: '250px', border: '0px'}}>
         <Table cellPadding={6} cellSpacing={1} >
@@ -90,4 +89,4 @@ export default function Datatable() {
 // <tr>{ data[0] && columns.map((heading) => <th>{heading}</th>) }</tr>
 //</thead>
 // <button type="button" onClick={() => handleRemove(row.ticker)}></button>
-// 
+//

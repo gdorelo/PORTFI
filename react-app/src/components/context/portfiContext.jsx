@@ -1,5 +1,4 @@
 import React, { useState, useEffect, createContext } from 'react'
-import axios from 'axios';
 export const PortfiContext = createContext();
 
 export const PortfiProvider = ({children}) => {
@@ -7,11 +6,11 @@ export const PortfiProvider = ({children}) => {
     const [dataFiltrada, setDataFiltrada] = useState([]);
     const [loading, setLoading] = useState(false)
     const [loadingChart, setLoadingChart] = useState(false)
-    
+
     const [loadingAnimation, setLoadingAnimation] = useState(false)
     const [listAssets, setListAssets] = useState([])
     const [compositionData, setCompositionData] = useState([])
-    
+
     const [composition_portfoloio, setCompositionPortfolio] = useState([])
     const [performance, setPerformance] = useState({
         sharpe: {
@@ -34,7 +33,7 @@ export const PortfiProvider = ({children}) => {
             Portafolio:0,
             Benchmark:0
         },
-        
+
         ret_portfolio : [],
 
         ret_benchmark : [],
@@ -42,7 +41,7 @@ export const PortfiProvider = ({children}) => {
         ret_dates : []
 
     })
-      
+
     useEffect ( async () =>{
         if (loading) {
         const data = await fetch('/portfolio')
@@ -55,7 +54,7 @@ export const PortfiProvider = ({children}) => {
     }
     }, [dataFiltrada, loading, compositionData])
 
-    function generateDataTable(data) { 
+    function generateDataTable(data) {
         const list_assets = []
         let ticker = ""
         let weigth = 0
@@ -71,10 +70,10 @@ export const PortfiProvider = ({children}) => {
         setDataFromBackend(list_assets || [])
     }
 
-    
+
     return (
         <PortfiContext.Provider value={{dataFromBackend, setDataFromBackend, dataFiltrada, setDataFiltrada, setLoading, setLoadingChart, listAssets, setListAssets, compositionData, setCompositionData, loading, setLoadingAnimation, loadingAnimation, composition_portfoloio, setCompositionPortfolio, performance, setPerformance  }}>
             {children}
         </PortfiContext.Provider>
-        ) 
+        )
 }
