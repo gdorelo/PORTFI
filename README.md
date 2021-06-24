@@ -99,6 +99,6 @@ Enjoy!
 **Matias Zappino** https://github.com/matiaszappino/
 
 
+<h3>Contributors</h3>
 
-
-
+**Nicolas Ribeiro** https://github.com/nikolasribeiro
